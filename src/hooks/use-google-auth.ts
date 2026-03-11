@@ -8,11 +8,11 @@ WebBrowser.maybeCompleteAuthSession();
 
 const GOOGLE_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
 
-const discovery = AuthSession.useAutoDiscovery(
-  "https://accounts.google.com"
-);
-
 export function useGoogleAuth() {
+  const discovery = AuthSession.useAutoDiscovery(
+    "https://accounts.google.com"
+  );
+
   const redirectUri = AuthSession.makeRedirectUri({ scheme: "shopkwetu" });
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
