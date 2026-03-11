@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   Alert,
+  StyleSheet,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
@@ -48,32 +49,26 @@ export default function SignUpScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1 bg-white"
+      style={s.flex}
     >
       <ScrollView
-        contentContainerClassName="flex-1 justify-center px-6"
+        contentContainerStyle={s.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="mb-10">
-          <Text className="text-3xl font-bold text-center text-primary-600">
-            ShopKwetu
-          </Text>
-          <Text className="mt-2 text-center text-gray-500">
-            Create your account
-          </Text>
+        <View style={s.header}>
+          <Text style={s.brand}>ShopKwetu</Text>
+          <Text style={s.headerSub}>Create your account</Text>
         </View>
 
-        {/* Name Field */}
-        <View className="mb-4">
-          <Text className="mb-1.5 text-sm font-medium text-gray-700">
-            Name
-          </Text>
+        {/* Name */}
+        <View style={s.fieldGroup}>
+          <Text style={s.label}>Name</Text>
           <Controller
             control={control}
             name="name"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900"
+                style={s.input}
                 placeholder="Your full name"
                 placeholderTextColor="#9ca3af"
                 autoCapitalize="words"
@@ -85,24 +80,18 @@ export default function SignUpScreen() {
               />
             )}
           />
-          {errors.name && (
-            <Text className="mt-1 text-sm text-red-500">
-              {errors.name.message}
-            </Text>
-          )}
+          {errors.name && <Text style={s.error}>{errors.name.message}</Text>}
         </View>
 
-        {/* Email Field */}
-        <View className="mb-4">
-          <Text className="mb-1.5 text-sm font-medium text-gray-700">
-            Email
-          </Text>
+        {/* Email */}
+        <View style={s.fieldGroup}>
+          <Text style={s.label}>Email</Text>
           <Controller
             control={control}
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900"
+                style={s.input}
                 placeholder="you@example.com"
                 placeholderTextColor="#9ca3af"
                 autoCapitalize="none"
@@ -115,24 +104,18 @@ export default function SignUpScreen() {
               />
             )}
           />
-          {errors.email && (
-            <Text className="mt-1 text-sm text-red-500">
-              {errors.email.message}
-            </Text>
-          )}
+          {errors.email && <Text style={s.error}>{errors.email.message}</Text>}
         </View>
 
-        {/* Password Field */}
-        <View className="mb-6">
-          <Text className="mb-1.5 text-sm font-medium text-gray-700">
-            Password
-          </Text>
+        {/* Password */}
+        <View style={s.fieldGroupLg}>
+          <Text style={s.label}>Password</Text>
           <Controller
             control={control}
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="rounded-xl border border-gray-300 px-4 py-3 text-base text-gray-900"
+                style={s.input}
                 placeholder="At least 6 characters"
                 placeholderTextColor="#9ca3af"
                 secureTextEntry
@@ -144,38 +127,28 @@ export default function SignUpScreen() {
               />
             )}
           />
-          {errors.password && (
-            <Text className="mt-1 text-sm text-red-500">
-              {errors.password.message}
-            </Text>
-          )}
+          {errors.password && <Text style={s.error}>{errors.password.message}</Text>}
         </View>
 
-        {/* Submit Button */}
+        {/* Submit */}
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
-          className="items-center rounded-xl bg-primary-600 py-3.5 mb-4"
+          style={s.submitBtn}
         >
           {isLoading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text className="text-base font-semibold text-white">
-              Create Account
-            </Text>
+            <Text style={s.submitText}>Create Account</Text>
           )}
         </TouchableOpacity>
 
         {/* Link to Sign In */}
-        <View className="flex-row justify-center">
-          <Text className="text-sm text-gray-500">
-            Already have an account?{" "}
-          </Text>
+        <View style={s.footer}>
+          <Text style={s.footerText}>Already have an account? </Text>
           <Link href="/(auth)/sign-in" asChild>
             <TouchableOpacity>
-              <Text className="text-sm font-semibold text-primary-600">
-                Sign In
-              </Text>
+              <Text style={s.footerLink}>Sign In</Text>
             </TouchableOpacity>
           </Link>
         </View>
@@ -183,3 +156,27 @@ export default function SignUpScreen() {
     </KeyboardAvoidingView>
   );
 }
+
+const s = StyleSheet.create({
+  flex: { flex: 1, backgroundColor: "#fff" },
+  scrollContent: { flexGrow: 1, justifyContent: "center", paddingHorizontal: 24 },
+  header: { marginBottom: 40 },
+  brand: { fontSize: 30, fontWeight: "bold", textAlign: "center", color: "#059669" },
+  headerSub: { marginTop: 8, textAlign: "center", color: "#6b7280" },
+  fieldGroup: { marginBottom: 16 },
+  fieldGroupLg: { marginBottom: 24 },
+  label: { marginBottom: 6, fontSize: 14, fontWeight: "500", color: "#374151" },
+  input: {
+    borderRadius: 12, borderWidth: 1, borderColor: "#d1d5db",
+    paddingHorizontal: 16, paddingVertical: 12, fontSize: 16, color: "#111827",
+  },
+  error: { marginTop: 4, fontSize: 14, color: "#ef4444" },
+  submitBtn: {
+    alignItems: "center", borderRadius: 12,
+    backgroundColor: "#059669", paddingVertical: 14, marginBottom: 16,
+  },
+  submitText: { fontSize: 16, fontWeight: "600", color: "#fff" },
+  footer: { flexDirection: "row", justifyContent: "center" },
+  footerText: { fontSize: 14, color: "#6b7280" },
+  footerLink: { fontSize: 14, fontWeight: "600", color: "#059669" },
+});

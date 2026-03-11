@@ -13,8 +13,6 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useAuthStore } from "@/stores/auth-store";
 import { queryClient } from "@/lib/query-client";
 
-import "../global.css";
-
 // Keep splash screen visible while we load auth
 SplashScreen.preventAutoHideAsync();
 
